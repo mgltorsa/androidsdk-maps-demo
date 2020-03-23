@@ -80,6 +80,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Button resetButton = findViewById(R.id.resetButton);
         resetButton.setOnClickListener((view)->{
             markers.clear();
+            this.distanceBox.setText("");
+            minDistance=Double.MAX_VALUE;
         });
 
 
@@ -102,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> {
-
+            mMap.clear();
             markerMode = false;
             dialog.cancel();
 
@@ -252,10 +254,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!markers.contains(options.getPosition())) {
             markers.addMarker(new Marker(options));
         }
-
-
-
-
         double distance = calculateMinimum(options.getPosition());
 
         if(distance < minDistance){
